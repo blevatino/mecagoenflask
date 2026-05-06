@@ -16,6 +16,9 @@ LIMITE_CONTADOR = 100
 PuertoEnvio = 63028
 PuertoEscucha = 62262
 
+MI_NOMBRE = "Bruno Levatino"
+
+
 def get_ip_local():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -25,43 +28,47 @@ def get_ip_local():
         s.close()
 
 
-@app.route('/', methods=['POST'])
+@app.route("/", methods=["POST"])
 def recibir_mensaje():
     data = request.get_json()
-    mensaje_texto = data.get('mensaje', '')
-    contador = data.get('contador', 0) + 1
+    message = data.get("message", [])
+    counter = data.get("counter", 0) + 1
+    repetidores = data.get("repetidores", [])
+
+    if MI_NOMBRE not in repetidores:
+        repetidores.append(MI_NOMBRE)
 
     ip_local = get_ip_local()
-    print(f"[{ip_local}] [{contador}] {mensaje_texto}")
+    print(f"[{ip_local}] [{counter}] {message} - Repetidores: {repetidores}")
 
-    if contador >= LIMITE_CONTADOR:
+    if counter >= LIMITE_CONTADOR:
         print(f"[{ip_local}] Mensaje eliminado (limite {LIMITE_CONTADOR} alcanzado)")
-        return jsonify({"status": "eliminado", "contador": contador}), 200
+        return jsonify({"status": "eliminado", "counter": counter}), 200
 
     def pasar_siguiente():
         try:
             url = f"http://{IP_SIGUIENTE}:{PuertoEnvio}/"
             requests.post(
                 url,
-                json={"mensaje": mensaje_texto, "contador": contador},
-                timeout=5
+                json={
+                    "message": message,
+                    "counter": counter,
+                    "repetidores": repetidores,
+                },
+                timeout=5,
             )
         except Exception as e:
             print(f"Error al pasar a {IP_SIGUIENTE}: {str(e)}")
 
     threading.Thread(target=pasar_siguiente).start()
 
-    return jsonify({"status": "ok", "contador": contador}), 200
+    return jsonify({"status": "ok", "counter": counter}), 200
 
 
 def enviar_mensaje(mensaje):
     try:
         url = f"http://{IP_SIGUIENTE}:{PuertoEnvio}/"
-        requests.post(
-            url,
-            json={"mensaje": mensaje, "contador": 0},
-            timeout=5
-        )
+        requests.post(url, json={"mensaje": mensaje, "contador": 0}, timeout=5)
     except Exception as e:
         print(f"Error al enviar a {IP_SIGUIENTE}: {str(e)}")
 
@@ -77,10 +84,10 @@ def loop_input():
             break
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ip_local = get_ip_local()
     print(f"Servidor en {ip_local}:{PuertoEscucha} -> siguiente: {IP_SIGUIENTE}")
 
     threading.Thread(target=loop_input, daemon=True).start()
 
-    app.run(host='0.0.0.0', port=PuertoEscucha, debug=False)
+    app.run(host="0.0.0.0", port=PuertoEscucha, debug=False)
