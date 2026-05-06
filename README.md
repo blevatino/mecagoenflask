@@ -15,7 +15,7 @@ source .venv/bin/activate  # Linux/Mac
 uv pip install -r requirements.txt
 ```
 ## Ejecutar el servidor
-python mainizquieda.py
-python mainderecha.py
+python mainenvioizquieda.py
+python mainenvioderecha.py
 
 

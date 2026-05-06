@@ -9,12 +9,12 @@ app = Flask(__name__)
 # =============================================
 #   CONFIGURÁ ESTA IP ANTES DE ARRANCAR
 # =============================================
-IP_SIGUIENTE = "192.168.220.107"
+IP_SIGUIENTE = "192.168.220.107" #ip del de la derecha
 
 LIMITE_CONTADOR = 100
 
-PuertoEnvio = 63028
-PuertoEscucha = 62262
+PuertoEnvio = 63028 # Puerto propio
+PuertoEscucha = 49181 #Puerto del de la izquierda
 
 MI_NOMBRE = "Bruno Levatino"
 
@@ -68,7 +68,11 @@ def recibir_mensaje():
 def enviar_mensaje(mensaje):
     try:
         url = f"http://{IP_SIGUIENTE}:{PuertoEnvio}/"
-        requests.post(url, json={"mensaje": mensaje, "contador": 0}, timeout=5)
+        requests.post(
+            url,
+            json={"message": mensaje, "counter": 0, "repetidores": [MI_NOMBRE]},
+            timeout=5,
+        )
     except Exception as e:
         print(f"Error al enviar a {IP_SIGUIENTE}: {str(e)}")
 
