@@ -9,12 +9,12 @@ app = Flask(__name__)
 # =============================================
 #   CONFIGURÁ ESTA IP ANTES DE ARRANCAR
 # =============================================
-IP_SIGUIENTE = "192.168.220.107"
+IP_SIGUIENTE = "192.168.220.130"
 
 LIMITE_CONTADOR = 100
 
 PuertoEnvio = 63028
-PuertoEscucha = 62262
+PuertoEscucha = 49181 
 
 def get_ip_local():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
