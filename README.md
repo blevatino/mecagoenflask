@@ -18,4 +18,25 @@ uv pip install -r requirements.txt
 python mainenvioizquieda.py
 python mainenvioderecha.py
 
+sudo docker build -t nodo-flask .
+
+sudo docker run --rm -it --network=host \
+-e NOMBRE_NODO="Nodo-A" \
+-e IP_SIGUIENTE="127.0.0.1" \
+-e PUERTO_ENVIO=49181 \
+-e PUERTO_ESCUCHA=62262 \
+-e LIMITE_CONTADOR=100 \
+nodo-flask
+
+sudo docker run --rm -it --network=host \
+-e NOMBRE_NODO="Nodo-B" \
+-e IP_SIGUIENTE="127.0.0.1" \
+-e PUERTO_ENVIO=62262 \
+-e PUERTO_ESCUCHA=49181 \
+-e LIMITE_CONTADOR=100 \
+nodo-flask
+
+
+
+
 
