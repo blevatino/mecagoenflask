@@ -1,0 +1,12 @@
+services:
+  nodo:
+    build: .
+    network_mode: host
+    stdin_open: true
+    tty: true
+    environment:
+      - NOMBRE_NODO=${NOMBRE_NODO:-Nodo-Docker}
+      - IP_SIGUIENTE=${IP_SIGUIENTE:-127.0.0.1}
+      - PUERTO_ENVIO=${PUERTO_ENVIO:-5000}
+      - PUERTO_ESCUCHA=${PUERTO_ESCUCHA:-5000}
+      - LIMITE_CONTADOR=${LIMITE_CONTADOR:-100}
