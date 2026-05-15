@@ -24,18 +24,18 @@ sudo docker build -t nodo-flask .
 sudo docker run --rm -it --network=host \
 -e NOMBRE_NODO="Bruno Levatino" \
 -e IP_SIGUIENTE="192.168.220.107" \
--e PUERTO_ENVIO=62262 \
--e PUERTO_ESCUCHA=63028 \
--e LIMITE_CONTADOR=100 \
+-e PUERTO_ENVIO=63028 \
+-e PUERTO_ESCUCHA=49181 \
+-e LIMITE_CONTADOR=6 \
 nodo-flask
 
 ## Izquierda
 sudo docker run --rm -it --network=host \
 -e NOMBRE_NODO="Bruno Levatino" \
--e IP_SIGUIENTE="192.168.220.120" \
--e PUERTO_ENVIO=62262 \
--e PUERTO_ESCUCHA=49181 \
--e LIMITE_CONTADOR=100 \
+-e IP_SIGUIENTE="192.168.220.130" \
+-e PUERTO_ENVIO=63028 \
+-e PUERTO_ESCUCHA=62262 \
+-e LIMITE_CONTADOR=6 \
 nodo-flask
 
 
