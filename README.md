@@ -20,17 +20,19 @@ python mainenvioderecha.py
 
 sudo docker build -t nodo-flask .
 
+## Derecha
 sudo docker run --rm -it --network=host \
--e NOMBRE_NODO="Nodo-A" \
--e IP_SIGUIENTE="127.0.0.1" \
--e PUERTO_ENVIO=49181 \
--e PUERTO_ESCUCHA=62262 \
+-e NOMBRE_NODO="Bruno Levatino" \
+-e IP_SIGUIENTE="192.168.220.107" \
+-e PUERTO_ENVIO=62262 \
+-e PUERTO_ESCUCHA=63028 \
 -e LIMITE_CONTADOR=100 \
 nodo-flask
 
+## Izquierda
 sudo docker run --rm -it --network=host \
--e NOMBRE_NODO="Nodo-B" \
--e IP_SIGUIENTE="127.0.0.1" \
+-e NOMBRE_NODO="Bruno Levatino" \
+-e IP_SIGUIENTE="192.168.220.120" \
 -e PUERTO_ENVIO=62262 \
 -e PUERTO_ESCUCHA=49181 \
 -e LIMITE_CONTADOR=100 \

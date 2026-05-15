@@ -60,7 +60,7 @@ def print_separator(color=DIM):
 @app.route("/", methods=["POST"])
 def recibir_mensaje():
     data = request.get_json()
-    message = data.get("message", [])
+    message = data.get("name", [])
     counter = data.get("counter", 0) + 1
     repetidores = data.get("repetidores", [])
 
@@ -75,7 +75,7 @@ def recibir_mensaje():
     print(f"   {CYAN}📍 De:{RESET}       {ip_local}:{PUERTO_ESCUCHA}")
     print(f"   {YELLOW}🔢 Contador:{RESET} {BOLD}{counter}{RESET} / {LIMITE_CONTADOR}")
     print_separator(DIM)
-    print(f"   {MAGENTA}💬 Mensaje:{RESET}")
+    print(f"   {MAGENTA}👤 Nombre:{RESET}")
     print(f"      {WHITE}{message}{RESET}")
     print_separator(DIM)
     print(f"   {BLUE}🔄 Recorrido:{RESET}")
@@ -102,7 +102,7 @@ def recibir_mensaje():
             requests.post(
                 url,
                 json={
-                    "message": message,
+                    "name": message,
                     "counter": counter,
                     "repetidores": repetidores,
                 },
@@ -127,14 +127,14 @@ def enviar_mensaje(mensaje):
         print_separator(DIM)
         print(f"   {CYAN}📤 Destino:{RESET}  {destino}")
         print(f"   {BLUE}👤 Remitente:{RESET} {NOMBRE_NODO}")
-        print(f"   {MAGENTA}💬 Mensaje:{RESET}")
+        print(f"   {MAGENTA}👤 Nombre:{RESET}")
         print(f"      {WHITE}{mensaje}{RESET}")
         print_separator(YELLOW)
 
         url = f"http://{IP_SIGUIENTE}:{PUERTO_ENVIO}/"
         requests.post(
             url,
-            json={"message": mensaje, "counter": 0, "repetidores": [NOMBRE_NODO]},
+            json={"name": mensaje, "counter": 0, "repetidores": [NOMBRE_NODO]},
             timeout=5,
         )
     except Exception as e:
@@ -147,7 +147,7 @@ def loop_input():
     time.sleep(1)
     print()
     print_separator(CYAN)
-    print(f"{CYAN}{BOLD}✏️  ESCRIBE UN MENSAJE Y PRESIONA ENTER{RESET}")
+    print(f"{CYAN}{BOLD}✏️  ESCRIBE UN NOMBRE Y PRESIONA ENTER{RESET}")
     print_separator(DIM)
     while True:
         try:
